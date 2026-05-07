@@ -169,8 +169,14 @@ simplified, `时间偏移` time offset (Enter for free-form input),
 `弹幕来源` source filter, `显示模式` mode visibility, `弹幕去重` dedup
 on/off + window + threshold.
 
-A clickable **`弹`** icon also appears in the top-right when mpv's OSC
-is visible — click it to toggle.
+A clickable **`弹`** icon also appears on the right edge, vertically
+centered, when mpv's OSC is visible — click it to toggle. The
+right-middle position is deliberate: mpv's OSC reserves the top
+edge (window-controls + title in some styles) and the bottom edge
+(seek bar), so the right-middle is the only consistently free
+region across every default OSC layout. Earlier versions placed it
+top-right, which clashed with OSC's window-control buttons when no
+WM decorations were drawn.
 
 ### Configuration
 

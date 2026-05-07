@@ -169,10 +169,19 @@ local state = {
     parsed_episode = nil,
 }
 
--- Coordinates for the icon (top-right corner, slightly inset). Click area
--- is computed from this on every mouse-btn0 press.
+-- Icon geometry. Position is right-edge, vertically centered: that's
+-- consistently free across every default mpv OSC layout (which uses
+-- top + bottom regions but never the right edge midline). The
+-- vertical-center placement avoids covering OSC's window-controls
+-- (top-right) or its seek bar (bottom).
 local ICON_W, ICON_H = 70, 50
 local ICON_PAD = 24
+
+local function icon_xy()
+    local W = mp.get_property_number("osd-width", 1920)
+    local H = mp.get_property_number("osd-height", 1080)
+    return W - ICON_W - ICON_PAD, math.floor((H - ICON_H) / 2)
+end
 
 -- ============================================================================
 -- Settings persistence
@@ -293,8 +302,7 @@ local function update_icon_overlay()
     end
     state.overlay_visible = true
 
-    local x = W - ICON_W - ICON_PAD
-    local y = ICON_PAD
+    local x, y = icon_xy()
     local fg, bg, bg_alpha
     if not settings.enabled then
         fg = "&H888888&"; bg = "&H222222&"; bg_alpha = "&H80&"
@@ -1406,9 +1414,7 @@ end
 local function mouse_inside_icon()
     local pos = mp.get_property_native("mouse-pos")
     if not pos then return false end
-    local W = mp.get_property_number("osd-width", 1920)
-    local x = W - ICON_W - ICON_PAD
-    local y = ICON_PAD
+    local x, y = icon_xy()
     return pos.x >= x and pos.x <= x + ICON_W
        and pos.y >= y and pos.y <= y + ICON_H
 end
