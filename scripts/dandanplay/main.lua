@@ -812,8 +812,10 @@ local PANEL_ROWS = {
                                 or  "▶ 开启弹幕显示"
                         end},
 }
--- Panel sized to fit ~22 rows comfortably at row_h=30 + section spacing.
-local PANEL_W, PANEL_H = 740, 760
+-- Panel sized to fit ~24 rows comfortably at row_h=30 + section spacing.
+-- Bump PANEL_H by row_h (30) whenever you add a row so the last row plus
+-- the bottom hint band still fit inside the background box.
+local PANEL_W, PANEL_H = 740, 820
 
 -- panel_state: row cursor + sub-cursor for multi-toggle rows (chip index)
 local panel_cursor = 1
